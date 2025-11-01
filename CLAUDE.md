@@ -27,7 +27,7 @@ devops-claude-skills/
 │       ├── SKILL.md
 │       ├── references/
 │       └── scripts/
-├── aws-cost-finops/             # Skill: AWS cost optimization & FinOps
+├── aws-cost-optimization/       # Skill: AWS cost optimization & FinOps
 │   ├── .claude-plugin/
 │   │   └── plugin.json
 │   ├── SKILL.md                 # Main skill content (at root level)
@@ -108,7 +108,7 @@ Each skill includes Python scripts that follow a common pattern:
 
 **Workflow Pattern**: Systematic triage (Gather Context → Initial Triage → Deep Dive → Root Cause → Remediation → Verify)
 
-### aws-cost-finops
+### aws-cost-optimization
 **Purpose**: AWS cost optimization and FinOps workflows
 
 **Key Components**:
@@ -253,7 +253,7 @@ Skills can be tested by:
    ```bash
    /plugin install iac-terraform@devops-skills
    /plugin install k8s-troubleshooter@devops-skills
-   /plugin install aws-cost-finops@devops-skills
+   /plugin install aws-cost-optimization@devops-skills
    /plugin install ci-cd@devops-skills
    /plugin install gitops-workflows@devops-skills
    /plugin install monitoring-observability@devops-skills
@@ -270,12 +270,12 @@ Skills can be tested by:
    python3 k8s-troubleshooter/skills/scripts/diagnose_pod.py <namespace> <pod>
 
    # AWS cost optimization scripts
-   python3 aws-cost-finops/scripts/find_unused_resources.py
-   python3 aws-cost-finops/scripts/analyze_ri_recommendations.py --days 60
-   python3 aws-cost-finops/scripts/detect_old_generations.py --region us-east-1
-   python3 aws-cost-finops/scripts/spot_recommendations.py
-   python3 aws-cost-finops/scripts/rightsizing_analyzer.py --days 30
-   python3 aws-cost-finops/scripts/cost_anomaly_detector.py --days 30
+   python3 aws-cost-optimization/scripts/find_unused_resources.py
+   python3 aws-cost-optimization/scripts/analyze_ri_recommendations.py --days 60
+   python3 aws-cost-optimization/scripts/detect_old_generations.py --region us-east-1
+   python3 aws-cost-optimization/scripts/spot_recommendations.py
+   python3 aws-cost-optimization/scripts/rightsizing_analyzer.py --days 30
+   python3 aws-cost-optimization/scripts/cost_anomaly_detector.py --days 30
 
    # GitOps workflows scripts
    python3 gitops-workflows/scripts/check_argocd_health.py --server argocd.example.com

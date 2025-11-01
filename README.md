@@ -14,7 +14,7 @@ Use for creating, validating, troubleshooting, and managing Terraform configurat
 
 Diagnose pod failures, cluster issues, performance problems, and production incidents. Features cluster health checks, pod diagnostics, and structured incident response playbooks.
 
-### aws-cost-finops
+### aws-cost-optimization
 **AWS cost optimization and FinOps workflows**
 
 Find unused resources, analyze Reserved Instance opportunities, detect cost anomalies, rightsize instances, evaluate Spot instances, and implement FinOps best practices.
@@ -67,7 +67,7 @@ Install skills:
 ```bash
 /plugin install iac-terraform@devops-skills
 /plugin install k8s-troubleshooter@devops-skills
-/plugin install aws-cost-finops@devops-skills
+/plugin install aws-cost-optimization@devops-skills
 /plugin install ci-cd@devops-skills
 /plugin install gitops-workflows@devops-skills
 /plugin install monitoring-observability@devops-skills

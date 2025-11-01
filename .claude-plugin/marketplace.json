@@ -15,8 +15,8 @@
       "description": "Systematic Kubernetes troubleshooting and incident response"
     },
     {
-      "name": "aws-cost-finops",
-      "source": "./aws-cost-finops",
+      "name": "aws-cost-optimization",
+      "source": "./aws-cost-optimization",
       "description": "AWS cost optimization and FinOps workflows with automated analysis scripts"
     },
     {
