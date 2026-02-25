@@ -7,17 +7,6 @@ description: Systematic Kubernetes troubleshooting and incident response. Use wh
 
 Systematic approach to diagnosing and resolving Kubernetes issues in production environments.
 
-## When to Use This Skill
-
-Use this skill when:
-- Investigating pod failures (CrashLoopBackOff, ImagePullBackOff, Pending, etc.)
-- Responding to production incidents or outages
-- Troubleshooting cluster health issues
-- Diagnosing networking or service connectivity problems
-- Investigating storage/volume issues
-- Analyzing performance degradation
-- Conducting post-incident analysis
-
 ## Core Troubleshooting Workflow
 
 Follow this systematic approach for any Kubernetes issue:
@@ -194,143 +183,15 @@ kubectl get rolebindings,clusterrolebindings -n <namespace>
 
 ## Diagnostic Scripts
 
-### cluster_health.py
-Comprehensive cluster health check covering:
-- Node status and health
-- System pod status (kube-system, etc.)
-- Pending pods across all namespaces
-- Failed pods
-- Pods in crash loops
-
-Usage: `python3 scripts/cluster_health.py`
-
-Best used as first diagnostic step to get overall cluster health snapshot.
-
-### check_namespace.py
-
-Namespace-level health check and diagnostics:
-- Pod health (running, pending, failed, crashlooping, image pull errors)
-- Service health and endpoints
-- Deployment availability status
-- PersistentVolumeClaim status
-- Resource quota usage and limits
-- Recent namespace events
-- Health status assessment
-- Actionable recommendations
-
-**Usage:**
-```bash
-# Human-readable output
-python3 scripts/check_namespace.py <namespace>
-
-# JSON output for automation
-python3 scripts/check_namespace.py <namespace> --json
-
-# Include more events
-python3 scripts/check_namespace.py <namespace> --events 20
-```
-
-Best used when troubleshooting issues in a specific namespace or assessing overall namespace health.
-
-### diagnose_pod.py
-Detailed pod-level diagnostics:
-- Pod phase and status
-- Container states (waiting, running, terminated)
-- Restart counts and patterns
-- Resource configuration issues
-- Recent events
-- Actionable recommendations
-
-Usage: `python3 scripts/diagnose_pod.py <namespace> <pod-name>`
-
-Best used when investigating specific pod failures or behavior.
+| Script | Purpose | Usage |
+|--------|---------|-------|
+| `cluster_health.py` | Cluster-wide health snapshot (nodes, system pods, failures) | `python3 scripts/cluster_health.py` |
+| `check_namespace.py` | Namespace health (pods, services, PVCs, quotas, events) | `python3 scripts/check_namespace.py <ns>` (supports `--json`, `--events N`) |
+| `diagnose_pod.py` | Pod-level diagnostics (states, restarts, resources, events) | `python3 scripts/diagnose_pod.py <ns> <pod>` |
 
 ## Reference Documentation
 
-### references/common_issues.md
-Comprehensive guide to common Kubernetes issues with:
-- Detailed symptom descriptions
-- Root cause analysis
-- Step-by-step diagnostic procedures
-- Remediation instructions
-- Prevention strategies
-
-Covers:
-- Pod issues (ImagePullBackOff, CrashLoopBackOff, Pending, OOMKilled)
-- Node issues (NotReady, DiskPressure)
-- Networking issues (pod-to-pod communication, service access)
-- Storage issues (PVC pending, volume mount failures)
-- Resource issues (quota exceeded, CPU throttling)
-- Security issues (vulnerabilities, RBAC)
-
-Read this when you identify a specific issue type but need detailed remediation steps.
-
-### references/incident_response.md
-Structured incident response framework including:
-- Incident response phases (Detection → Triage → Investigation → Resolution → Post-Incident)
-- Severity level definitions
-- Detailed playbooks for common incident scenarios
-- Communication guidelines
-- Post-incident review template
-- Best practices for prevention, preparedness, response, and recovery
-
-Read this when responding to production incidents or planning incident response procedures.
-
-### references/performance_troubleshooting.md
-
-Comprehensive performance diagnosis and optimization guide covering:
-- **High Latency Issues** - API response time, request latency troubleshooting
-- **CPU Performance** - Throttling detection, profiling, optimization
-- **Memory Performance** - OOM issues, leak detection, heap profiling
-- **Network Performance** - Latency, packet loss, DNS resolution
-- **Storage I/O Performance** - Disk performance testing, optimization
-- **Application-Level Metrics** - Prometheus integration, distributed tracing
-- **Cluster-Wide Performance** - Control plane, scheduler, resource utilization
-
-Read this when:
-- Investigating slow application response times
-- Diagnosing CPU or memory performance issues
-- Troubleshooting network latency or connectivity
-- Optimizing storage I/O performance
-- Setting up performance monitoring
-
-### references/helm_troubleshooting.md
-
-Complete guide to Helm troubleshooting including:
-- **Release Issues** - Stuck releases, missing resources, state problems
-- **Installation Failures** - Chart conflicts, validation errors, template rendering
-- **Upgrade and Rollback** - Failed upgrades, immutable field errors, rollback procedures
-- **Values and Configuration** - Values not applied, parsing errors, secret handling
-- **Chart Dependencies** - Dependency updates, version conflicts, subchart values
-- **Hooks and Lifecycle** - Hook failures, cleanup issues
-- **Repository Issues** - Chart access problems, version mismatches
-
-Read this when:
-- Working with Helm-deployed applications
-- Troubleshooting chart installations or upgrades
-- Debugging Helm release states
-- Managing chart dependencies
-
-## Best Practices
-
-**Always:**
-- Start with high-level health check before deep diving
-- Document symptoms and findings as you investigate
-- Check recent changes (deployments, config, infrastructure)
-- Preserve logs and state before making destructive changes
-- Test fixes in non-production when possible
-- Monitor after applying fixes to verify resolution
-
-**Never:**
-- Make production changes without understanding impact
-- Delete resources without confirming they're safe to remove
-- Restart pods repeatedly without investigating root cause
-- Apply fixes without documentation
-- Skip post-incident review
-
-**Key Principles:**
-- Systematic over random troubleshooting
-- Evidence-based diagnosis
-- Fix root cause, not symptoms
-- Learn and improve from each incident
-- Prevention is better than reaction
+- `references/common_issues.md` — Pod, node, networking, storage, resource, and RBAC issues with remediation steps
+- `references/incident_response.md` — Structured incident response framework with severity levels and playbooks
+- `references/performance_troubleshooting.md` — Latency, CPU, memory, network, storage, and cluster-wide performance diagnosis
+- `references/helm_troubleshooting.md` — Helm release, upgrade, values, dependency, and hook troubleshooting

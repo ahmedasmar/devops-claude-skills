@@ -7,18 +7,6 @@ description: Infrastructure as Code with Terraform and Terragrunt. Use for creat
 
 Comprehensive guidance for infrastructure as code using Terraform and Terragrunt, from development through production deployment.
 
-## When to Use This Skill
-
-Use this skill when:
-- Writing or refactoring Terraform configurations
-- Creating reusable Terraform modules
-- Troubleshooting Terraform/Terragrunt errors
-- Managing Terraform state
-- Implementing IaC best practices
-- Setting up Terragrunt project structure
-- Reviewing infrastructure code
-- Debugging plan/apply issues
-
 ## Core Workflows
 
 ### 1. New Infrastructure Development
@@ -352,221 +340,35 @@ inputs = {
 
 ### Common Patterns
 
-See `assets/templates/MODULE_TEMPLATE.md` for complete Terragrunt configuration templates including:
-- Root terragrunt.hcl with provider generation
-- Remote state configuration
-- Module-level terragrunt.hcl patterns
-- Dependency handling
+See `assets/templates/MODULE_TEMPLATE.md` for Terragrunt configuration templates (root config, remote state, module-level patterns, dependency handling).
 
 ## Reference Documentation
 
-### references/best_practices.md
-
-Comprehensive best practices covering:
-- **Project Structure** - Recommended directory layouts
-- **State Management** - Remote state, locking, organization
-- **Module Design** - Single responsibility, composability, versioning
-- **Variable Management** - Declarations, files hierarchy, secrets
-- **Resource Naming** - Conventions and standards
-- **Security Practices** - Least privilege, encryption, secret management
-- **Testing & Validation** - Tools and approaches
-- **CI/CD Integration** - Pipeline patterns
-
-Read this when:
-- Setting up new Terraform projects
-- Establishing team standards
-- Designing reusable modules
-- Implementing security controls
-- Setting up CI/CD pipelines
-
-### references/troubleshooting.md
-
-Detailed troubleshooting guide for:
-- **State Issues** - Lock errors, drift, corruption
-- **Provider Issues** - Version conflicts, authentication
-- **Resource Errors** - Already exists, dependencies, timeouts
-- **Module Issues** - Source not found, version conflicts
-- **Terragrunt Specific** - Dependency cycles, hooks
-- **Performance Issues** - Slow plans, optimization strategies
-
-Read this when:
-- Encountering specific error messages
-- Investigating unexpected behavior
-- Debugging failed deployments
-- Performance tuning
-
-Each issue includes:
-- Symptom description
-- Common causes
-- Step-by-step resolution
-- Prevention strategies
-
-### references/cost_optimization.md
-
-Cloud cost optimization strategies for Terraform-managed infrastructure:
-- **Right-Sizing Resources** - Compute, database, and storage optimization
-- **Spot and Reserved Instances** - Cost-effective instance strategies
-- **Storage Optimization** - S3 lifecycle policies, EBS volume types
-- **Networking Costs** - VPC endpoints, data transfer optimization
-- **Resource Lifecycle** - Scheduled shutdown, cleanup automation
-- **Cost Tagging** - Comprehensive tagging for cost allocation
-- **Monitoring and Alerts** - Budget alerts, anomaly detection
-- **Multi-Cloud** - Azure, GCP cost optimization patterns
-
-Read this when:
-- Planning infrastructure to minimize costs
-- Conducting cost reviews or optimization initiatives
-- Implementing auto-scaling and scheduling
-- Setting up cost monitoring and alerts
-- Designing cost-effective architectures
+- `references/best_practices.md` — Project structure, state management, module design, variables, naming, security, testing, CI/CD
+- `references/troubleshooting.md` — State locks, provider conflicts, resource errors, module issues, Terragrunt-specific problems, performance
+- `references/cost_optimization.md` — Right-sizing, Spot/RI strategies, storage optimization, networking costs, tagging, multi-cloud
 
 ## CI/CD Workflows
 
-Ready-to-use CI/CD pipeline templates in `assets/workflows/`:
+Ready-to-use pipeline templates in `assets/workflows/`:
 
-### github-actions-terraform.yml
-
-Complete GitHub Actions workflow including:
-- Terraform validation and formatting checks
-- TFLint linting
-- Checkov security scanning
-- Terraform plan on PRs with comment posting
-- Terraform apply on main branch with approval
-- OIDC authentication support
-
-### github-actions-terragrunt.yml
-
-Terragrunt-specific workflow featuring:
-- Changed module detection
-- Multi-module parallel planning
-- Run-all commands
-- Dependency-aware apply ordering
-- Manual workflow dispatch with environment selection
-
-### gitlab-ci-terraform.yml
-
-GitLab CI/CD pipeline with:
-- Multi-stage pipeline (validate, lint, security, plan, apply)
-- Artifact management
-- Manual deployment gates
-- Multi-environment configuration examples
-
-Use these templates as starting points for your CI/CD pipelines. Customize based on your:
-- Cloud provider and authentication method
-- Repository structure
-- Team approval workflows
-- Environment promotion strategy
+| Template | Platform | Features |
+|----------|----------|----------|
+| `github-actions-terraform.yml` | GitHub Actions | Validation, TFLint, Checkov, plan on PRs, apply on main, OIDC |
+| `github-actions-terragrunt.yml` | GitHub Actions | Changed module detection, parallel planning, dependency-aware apply |
+| `gitlab-ci-terraform.yml` | GitLab CI | Multi-stage pipeline, artifact management, manual gates |
 
 ## Scripts
 
-### init_module.py
-
-Scaffolds a new Terraform module with proper structure and template files.
-
-**Usage:**
-```bash
-# Create module in current directory
-python3 scripts/init_module.py my-vpc
-
-# Create in specific path
-python3 scripts/init_module.py my-vpc --path ./modules
-
-# Get JSON output
-python3 scripts/init_module.py my-vpc --json
-```
-
-**Creates:**
-- `main.tf` - Resource definitions with TODO placeholders
-- `variables.tf` - Input variables with validation examples
-- `outputs.tf` - Output values with descriptions
-- `versions.tf` - Terraform and provider version constraints
-- `README.md` - Module documentation template
-- `examples/complete/` - Complete usage example
-
-**Use when:**
-- Starting a new Terraform module
-- Ensuring consistent module structure across team
-- Quickly bootstrapping module development
-- Teaching module best practices
-
-### inspect_state.py
-
-Comprehensive state inspection and health check.
-
-**Usage:**
-```bash
-# Basic inspection
-python3 scripts/inspect_state.py /path/to/terraform
-
-# Include drift detection
-python3 scripts/inspect_state.py /path/to/terraform --check-drift
-```
-
-**Provides:**
-- State health status
-- Resource counts and types
-- Provider versions
-- Backend configuration
-- Resource issues (tainted, etc.)
-- Configuration drift detection (optional)
-- Actionable recommendations
-
-**Use when:**
-- Before major infrastructure changes
-- Investigating resource issues
-- Auditing infrastructure state
-- Detecting configuration drift
-
-### validate_module.py
-
-Validates Terraform modules against best practices.
-
-**Usage:**
-```bash
-python3 scripts/validate_module.py /path/to/module
-```
-
-**Checks:**
-- Required files present (main.tf, variables.tf, outputs.tf)
-- Variable descriptions and types
-- Output descriptions
-- Sensitive value handling
-- README completeness
-- Version constraints
-- Example configurations
-- Naming conventions
-- Hard-coded values that should be variables
-
-**Returns:**
-- Issues (must fix)
-- Warnings (should fix)
-- Suggestions (consider)
-
-**Use when:**
-- Creating new modules
-- Reviewing module code
-- Before releasing module versions
-- Establishing quality standards
+| Script | Purpose | Usage |
+|--------|---------|-------|
+| `init_module.py` | Scaffold new module with standard structure | `python3 scripts/init_module.py my-vpc [--path ./modules] [--json]` |
+| `inspect_state.py` | State inspection, health check, drift detection | `python3 scripts/inspect_state.py /path [--check-drift]` |
+| `validate_module.py` | Validate module against best practices | `python3 scripts/validate_module.py /path/to/module` |
 
 ## Assets
 
-### templates/MODULE_TEMPLATE.md
-
-Complete Terraform module template including:
-- File-by-file structure and examples
-- main.tf patterns
-- variables.tf with validation
-- outputs.tf best practices
-- versions.tf constraints
-- README.md template
-- Example usage configurations
-- Terragrunt configuration templates
-
-**Use this when:**
-- Creating new modules from scratch
-- Standardizing module structure
-- Onboarding team members
-- Establishing module conventions
+- `templates/MODULE_TEMPLATE.md` — Complete module template with file structure, examples, and Terragrunt configs
 
 ## Quick Reference
 
@@ -625,29 +427,4 @@ terragrunt run-all destroy
 terragrunt run-all apply --terragrunt-include-dir vpc --terragrunt-include-dir eks
 ```
 
-## Best Practices Summary
-
-**Always:**
-- Use remote state with locking
-- Plan before apply (review changes)
-- Pin Terraform and provider versions
-- Use modules for reusable components
-- Mark sensitive values as sensitive
-- Document everything
-- Test in non-production first
-
-**Never:**
-- Commit secrets or credentials
-- Manually edit state files
-- Use root AWS credentials
-- Skip code review for production changes
-- Deploy without testing
-- Ignore security scan findings
-
-**Key Principles:**
-- Infrastructure as code (everything in version control)
-- DRY (Don't Repeat Yourself) - use modules
-- Immutable infrastructure
-- Environment parity (dev/staging/prod similar)
-- Security by default
-- Document for future you
+See `references/best_practices.md` for comprehensive guidelines on state management, module design, security, and CI/CD patterns.

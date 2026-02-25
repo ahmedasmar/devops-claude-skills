@@ -7,64 +7,13 @@ description: AWS cost optimization and FinOps workflows. Use for finding unused 
 
 Systematic workflows for AWS cost optimization and financial operations management.
 
-## When to Use This Skill
-
-Use this skill when you need to:
-
-- **Find cost savings**: Identify unused resources, rightsizing opportunities, or commitment discounts
-- **Analyze spending**: Understand cost trends, detect anomalies, or break down costs
-- **Optimize architecture**: Choose cost-effective services, storage tiers, or instance types
-- **Implement FinOps**: Set up governance, tagging, budgets, or monthly reviews
-- **Make purchase decisions**: Evaluate Reserved Instances, Savings Plans, or Spot instances
-- **Troubleshoot costs**: Investigate unexpected bills or cost spikes
-- **Plan budgets**: Forecast costs or evaluate impact of new projects
-
 ## Cost Optimization Workflow
 
-Follow this systematic approach for AWS cost optimization:
-
-```
-┌─────────────────────────────────────────────┐
-│ 1. DISCOVER                                 │
-│    What are we spending money on?           │
-│    Run: find_unused_resources.py            │
-│    Run: cost_anomaly_detector.py            │
-└─────────────────────────────────────────────┘
-                    ↓
-┌─────────────────────────────────────────────┐
-│ 2. ANALYZE                                  │
-│    Where are the optimization opportunities?│
-│    Run: rightsizing_analyzer.py             │
-│    Run: detect_old_generations.py           │
-│    Run: spot_recommendations.py             │
-│    Run: analyze_ri_recommendations.py       │
-└─────────────────────────────────────────────┘
-                    ↓
-┌─────────────────────────────────────────────┐
-│ 3. PRIORITIZE                               │
-│    What should we optimize first?           │
-│    - Quick wins (low risk, high savings)    │
-│    - Low-hanging fruit (easy to implement)  │
-│    - Strategic improvements                 │
-└─────────────────────────────────────────────┘
-                    ↓
-┌─────────────────────────────────────────────┐
-│ 4. IMPLEMENT                                │
-│    Execute optimization actions             │
-│    - Delete unused resources                │
-│    - Rightsize instances                    │
-│    - Purchase commitments                   │
-│    - Migrate to new generations             │
-└─────────────────────────────────────────────┘
-                    ↓
-┌─────────────────────────────────────────────┐
-│ 5. MONITOR                                  │
-│    Verify savings and track metrics         │
-│    - Monthly cost reviews                   │
-│    - Tag compliance monitoring              │
-│    - Budget variance tracking               │
-└─────────────────────────────────────────────┘
-```
+1. **Discover** — `find_unused_resources.py`, `cost_anomaly_detector.py`
+2. **Analyze** — `rightsizing_analyzer.py`, `detect_old_generations.py`, `spot_recommendations.py`, `analyze_ri_recommendations.py`
+3. **Prioritize** — Quick wins (low risk, high savings) → low-hanging fruit → strategic improvements
+4. **Implement** — Delete unused resources, rightsize, purchase commitments, migrate generations
+5. **Monitor** — Monthly cost reviews, tag compliance, budget variance tracking
 
 ---
 
@@ -256,32 +205,10 @@ x86 → Graviton (ARM64): 20% savings
 
 **Step 1: Identify Candidates**
 ```bash
-# Analyze workloads for Spot suitability
 python3 scripts/spot_recommendations.py
-
-# Evaluates:
-# - Instances in Auto Scaling Groups (good candidates)
-# - Dev/test/staging environments
-# - Batch processing workloads
-# - CI/CD and build servers
 ```
 
-**Step 2: Assess Suitability**
-
-**Excellent for Spot**:
-- Stateless applications
-- Batch jobs
-- CI/CD pipelines
-- Data processing
-- Auto Scaling Groups
-
-**NOT suitable for Spot**:
-- Databases (without replicas)
-- Stateful applications
-- Real-time services
-- Mission-critical workloads
-
-**Step 3: Implementation Strategy**
+**Step 2: Implementation Strategy**
 
 **Option 1: Fargate Spot (Easiest)**
 ```yaml
@@ -332,139 +259,26 @@ aws ec2 request-spot-fleet --spot-fleet-request-config file://spot-fleet.json
 
 ---
 
-## Quick Reference: Cost Optimization Scripts
-
-### All Scripts Location
-```bash
-ls scripts/
-# find_unused_resources.py
-# analyze_ri_recommendations.py
-# detect_old_generations.py
-# spot_recommendations.py
-# rightsizing_analyzer.py
-# cost_anomaly_detector.py
-```
-
-### Script Usage Patterns
-
-**Monthly Review (Run all)**:
-```bash
-python3 scripts/find_unused_resources.py
-python3 scripts/cost_anomaly_detector.py --days 30
-python3 scripts/rightsizing_analyzer.py --days 30
-```
-
-**Quarterly Optimization**:
-```bash
-python3 scripts/analyze_ri_recommendations.py --days 60
-python3 scripts/detect_old_generations.py
-python3 scripts/spot_recommendations.py
-```
-
-**Specific Region Only**:
-```bash
-python3 scripts/find_unused_resources.py --region us-east-1
-python3 scripts/rightsizing_analyzer.py --region us-west-2
-```
-
-**Named AWS Profile**:
-```bash
-python3 scripts/find_unused_resources.py --profile production
-python3 scripts/cost_anomaly_detector.py --profile production --days 60
-```
-
-### Script Requirements
-```bash
-# Install dependencies
-pip install boto3 tabulate
-
-# AWS credentials required
-# Configure via: aws configure
-# Or use: --profile PROFILE_NAME
-```
-
 ---
 
 ## Service-Specific Optimization
 
-### Compute Optimization
-**Key Actions**:
-- Migrate to Graviton (20% savings)
-- Use Spot for fault-tolerant workloads (70% savings)
-- Purchase RIs for stable workloads (40-65% savings)
-- Right-size oversized instances
+| Category | Key Actions | Savings |
+|----------|------------|---------|
+| **Compute** | Graviton migration, Spot for fault-tolerant workloads, RIs for stable workloads, rightsizing | 20-70% |
+| **Storage** | gp2→gp3, S3 lifecycle policies, delete old snapshots, Intelligent-Tiering | 20-95% |
+| **Network** | VPC Endpoints instead of NAT Gateways, CloudFront, AZ colocation | $25-30/mo per NAT GW |
+| **Database** | Rightsize RDS, gp3 storage, Aurora Serverless for variable loads, RDS RIs | 20-40% |
 
-**Reference**: `references/best_practices.md` → Compute Optimization
-
-### Storage Optimization
-**Key Actions**:
-- Convert gp2 → gp3 (20% savings)
-- Implement S3 lifecycle policies (50-95% savings)
-- Delete old snapshots
-- Use S3 Intelligent-Tiering
-
-**Reference**: `references/best_practices.md` → Storage Optimization
-
-### Network Optimization
-**Key Actions**:
-- Replace NAT Gateways with VPC Endpoints (save $25-30/month each)
-- Use CloudFront to reduce data transfer costs
-- Colocate resources in same AZ when possible
-
-**Reference**: `references/best_practices.md` → Network Optimization
-
-### Database Optimization
-**Key Actions**:
-- Right-size RDS instances
-- Use gp3 storage (20% cheaper than gp2)
-- Evaluate Aurora Serverless for variable workloads
-- Purchase RDS Reserved Instances
-
-**Reference**: `references/best_practices.md` → Database Optimization
-
----
-
-## Service Alternatives Decision Guide
-
-Need help choosing between services?
-
-**Question**: "Should I use EC2, Lambda, or Fargate?"
-**Answer**: See `references/service_alternatives.md` → Compute Alternatives
-
-**Question**: "Which S3 storage class should I use?"
-**Answer**: See `references/service_alternatives.md` → Storage Alternatives
-
-**Question**: "Should I use RDS or Aurora?"
-**Answer**: See `references/service_alternatives.md` → Database Alternatives
-
-**Question**: "NAT Gateway vs VPC Endpoint vs NAT Instance?"
-**Answer**: See `references/service_alternatives.md` → Networking Alternatives
+**→ Details**: `references/best_practices.md` · **Service selection**: `references/service_alternatives.md`
 
 ---
 
 ## FinOps Governance & Process
 
-### Setting Up FinOps
+Three-phase rollout: Foundation (Cost Explorer, Budgets, tagging) → Visibility (enforcement, scripts, reviews) → Culture (KPIs, architecture reviews, optimization sprints).
 
-**Phase 1: Foundation (Month 1)**
-- Enable Cost Explorer
-- Set up AWS Budgets
-- Define tagging strategy
-- Activate cost allocation tags
-
-**Phase 2: Visibility (Months 2-3)**
-- Implement tagging enforcement
-- Run optimization scripts
-- Set up monthly reviews
-- Create team cost reports
-
-**Phase 3: Culture (Ongoing)**
-- Cost metrics in engineering KPIs
-- Cost review in architecture decisions
-- Regular optimization sprints
-- FinOps champions in each team
-
-**Full Guide**: See `references/finops_governance.md`
+**→ Full guide**: `references/finops_governance.md`
 
 ### Monthly Review Process
 
@@ -576,33 +390,10 @@ Always verify with resource owner before deletion!
 
 ---
 
-## Best Practices Summary
-
-1. **Tag Everything**: Consistent tagging enables cost allocation and accountability
-2. **Monitor Continuously**: Weekly script runs catch waste early
-3. **Review Monthly**: Regular reviews prevent cost drift
-4. **Right-size Proactively**: Don't wait for cost issues to optimize
-5. **Use Commitments Wisely**: RIs/SPs for stable workloads only
-6. **Test Before Migrating**: Especially for Graviton or Spot
-7. **Automate Cleanup**: Scheduled shutdown of dev/test resources
-8. **Share Wins**: Celebrate cost savings to build FinOps culture
-
----
-
 ## Additional Resources
 
-**Detailed References**:
-- `references/best_practices.md`: Comprehensive optimization strategies
-- `references/service_alternatives.md`: Cost-effective service selection
-- `references/finops_governance.md`: Organizational FinOps practices
+**References**: `references/best_practices.md` · `references/service_alternatives.md` · `references/finops_governance.md`
 
-**Templates**:
-- `assets/templates/monthly_cost_report.md`: Monthly reporting template
+**Templates**: `assets/templates/monthly_cost_report.md`
 
-**Scripts**:
-- All scripts in `scripts/` directory with `--help` for usage
-
-**AWS Documentation**:
-- AWS Cost Explorer: https://aws.amazon.com/aws-cost-management/aws-cost-explorer/
-- AWS Budgets: https://aws.amazon.com/aws-cost-management/aws-budgets/
-- FinOps Foundation: https://www.finops.org
+**Scripts**: All scripts in `scripts/` support `--help`, `--region`, and `--profile` flags. Install deps: `pip install boto3 tabulate`

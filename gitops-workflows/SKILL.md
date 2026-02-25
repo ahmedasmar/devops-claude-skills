@@ -1,24 +1,9 @@
 ---
 name: gitops-workflows
-description: GitOps deployment workflows with ArgoCD and Flux. Use for setting up GitOps (ArgoCD 3.x, Flux 2.7), designing repository structures (monorepo/polyrepo, app-of-apps), multi-cluster deployments (ApplicationSets, hub-spoke), secrets management (SOPS+age, Sealed Secrets, External Secrets Operator), progressive delivery (Argo Rollouts, Flagger), troubleshooting sync issues, and OCI artifact management. Covers latest 2024-2025 features: ArgoCD annotation-based tracking, fine-grained RBAC, Flux OCI artifacts GA, image automation, source-watcher.
+description: "GitOps deployment workflows with ArgoCD and Flux. Use for setting up GitOps (ArgoCD 3.x, Flux 2.7), designing repository structures (monorepo/polyrepo, app-of-apps), multi-cluster deployments (ApplicationSets, hub-spoke), secrets management (SOPS+age, Sealed Secrets, External Secrets Operator), progressive delivery (Argo Rollouts, Flagger), troubleshooting sync issues, and OCI artifact management. Covers latest 2024-2025 features including ArgoCD annotation-based tracking, fine-grained RBAC, Flux OCI artifacts GA, image automation, and source-watcher."
 ---
 
 # GitOps Workflows
-
-## Overview
-
-This skill provides comprehensive GitOps workflows for continuous deployment to Kubernetes using ArgoCD 3.x and Flux 2.7+.
-
-**When to use this skill**:
-- Setting up GitOps from scratch (ArgoCD or Flux)
-- Designing Git repository structures
-- Multi-cluster deployments
-- Troubleshooting sync/reconciliation issues
-- Implementing secrets management
-- Progressive delivery (canary, blue-green)
-- Migrating between GitOps tools
-
----
 
 ## Core Workflow: GitOps Implementation
 
@@ -186,8 +171,6 @@ python3 scripts/check_flux_health.py --namespace flux-system
 
 ### Monorepo Pattern
 
-**Best for**: Startups, small teams (< 20 apps), single team
-
 ```
 gitops-repo/
 ├── apps/
@@ -205,8 +188,6 @@ gitops-repo/
 ```
 
 ### Polyrepo Pattern
-
-**Best for**: Large orgs, multiple teams, clear boundaries
 
 ```
 infrastructure-repo/     (Platform team)
@@ -309,7 +290,7 @@ flux bootstrap github --context staging-cluster --path clusters/staging
 
 ## 5. Secrets Management
 
-**Never commit plain secrets to Git.** Choose a solution:
+Choose a secrets management solution:
 
 ### Decision Matrix
 
@@ -539,30 +520,8 @@ flux export source git --all > sources.yaml
 
 ## Resources Summary
 
-### Scripts (automation and diagnostics)
-- `check_argocd_health.py` - Diagnose ArgoCD sync issues (3.x compatible)
-- `check_flux_health.py` - Diagnose Flux reconciliation issues (2.7+ compatible)
-- `validate_gitops_repo.py` - Validate repository structure and manifests
-- `sync_drift_detector.py` - Detect drift between Git and cluster
-- `secret_audit.py` - Audit secrets management (SOPS, Sealed Secrets, ESO)
-- `applicationset_generator.py` - Generate ApplicationSet manifests
-- `promotion_validator.py` - Validate environment promotion workflows
-- `oci_artifact_checker.py` - Validate Flux OCI artifacts and verify signatures
+**Scripts**: `check_argocd_health.py` · `check_flux_health.py` · `validate_gitops_repo.py` · `sync_drift_detector.py` · `secret_audit.py` · `applicationset_generator.py` · `promotion_validator.py` · `oci_artifact_checker.py`
 
-### References (deep-dive documentation)
-- `argocd_vs_flux.md` - Comprehensive comparison (2024-2025), decision matrix
-- `repo_patterns.md` - Monorepo vs polyrepo, app-of-apps, environment structures
-- `secret_management.md` - SOPS+age, Sealed Secrets, ESO (2025 best practices)
-- `progressive_delivery.md` - Argo Rollouts, Flagger, canary/blue-green patterns
-- `multi_cluster.md` - ApplicationSets, Flux multi-tenancy, hub-spoke patterns
-- `troubleshooting.md` - Common sync issues, debugging commands
-- `best_practices.md` - CNCF GitOps principles, security, 2025 recommendations
-- `oci_artifacts.md` - Flux OCI artifacts (GA v2.6), signature verification
+**References**: `argocd_vs_flux.md` · `repo_patterns.md` · `secret_management.md` · `progressive_delivery.md` · `multi_cluster.md` · `troubleshooting.md` · `best_practices.md` · `oci_artifacts.md`
 
-### Templates (production-ready configurations)
-- `argocd/install-argocd-3.x.yaml` - ArgoCD 3.x installation with best practices
-- `applicationsets/cluster-generator.yaml` - Multi-cluster ApplicationSet example
-- `flux/flux-bootstrap-github.sh` - Flux 2.7 bootstrap script
-- `flux/oci-helmrelease.yaml` - OCI artifact + HelmRelease example
-- `secrets/sops-age-config.yaml` - SOPS + age configuration
-- `progressive-delivery/argo-rollouts-canary.yaml` - Canary deployment with analysis
+**Templates**: `argocd/install-argocd-3.x.yaml` · `applicationsets/cluster-generator.yaml` · `flux/flux-bootstrap-github.sh` · `flux/oci-helmrelease.yaml` · `secrets/sops-age-config.yaml` · `progressive-delivery/argo-rollouts-canary.yaml`

@@ -7,21 +7,6 @@ description: CI/CD pipeline design, optimization, DevSecOps security scanning, a
 
 Comprehensive guide for CI/CD pipeline design, optimization, security, and troubleshooting across GitHub Actions, GitLab CI, and other platforms.
 
-## When to Use This Skill
-
-Use this skill when:
-- Creating new CI/CD workflows or pipelines
-- Debugging pipeline failures or flaky tests
-- Optimizing slow builds or test suites
-- Implementing caching strategies
-- Setting up deployment workflows
-- Securing pipelines (secrets, OIDC, supply chain)
-- Implementing DevSecOps security scanning (SAST, DAST, SCA)
-- Troubleshooting platform-specific issues
-- Analyzing pipeline performance
-- Implementing matrix builds or test sharding
-- Configuring multi-environment deployments
-
 ## Core Workflows
 
 ### 1. Creating a New Pipeline
@@ -412,70 +397,32 @@ deploy:
 
 ## Diagnostic Scripts
 
-### Pipeline Analyzer
-
-Analyzes workflow configuration for optimization opportunities:
-
-```bash
-# GitHub Actions
-python3 scripts/pipeline_analyzer.py --platform github --workflow .github/workflows/ci.yml
-
-# GitLab CI
-python3 scripts/pipeline_analyzer.py --platform gitlab --config .gitlab-ci.yml
-```
-
-**Identifies:**
-- Missing caching opportunities
-- Unnecessary sequential execution
-- Outdated action versions
-- Unused artifacts
-- Overly broad triggers
-
-### CI Health Checker
-
-Checks pipeline status and identifies issues:
-
-```bash
-# GitHub Actions
-python3 scripts/ci_health.py --platform github --repo owner/repo --limit 20
-
-# GitLab CI
-python3 scripts/ci_health.py --platform gitlab --project-id 12345 --token $GITLAB_TOKEN
-```
-
-**Provides:**
-- Success/failure rates
-- Recent failure patterns
-- Workflow-specific insights
-- Actionable recommendations
+| Script | Purpose | Usage |
+|--------|---------|-------|
+| `pipeline_analyzer.py` | Find optimization opportunities (caching, parallelization, outdated actions) | `python3 scripts/pipeline_analyzer.py --platform github --workflow .github/workflows/ci.yml` |
+| `ci_health.py` | Pipeline success/failure rates and failure patterns | `python3 scripts/ci_health.py --platform github --repo owner/repo --limit 20` |
 
 ## Reference Documentation
 
-For deep-dive information on specific topics:
-
-- **[best_practices.md](references/best_practices.md)** - Pipeline design, testing strategies, deployment patterns, dependency management, artifact handling, platform-specific patterns
-- **[security.md](references/security.md)** - Secrets management, OIDC authentication, supply chain security, access control, vulnerability scanning, secure pipeline patterns
-- **[devsecops.md](references/devsecops.md)** - Comprehensive DevSecOps guide: SAST (CodeQL, Semgrep, Bandit, Gosec), DAST (OWASP ZAP), SCA (npm audit, pip-audit, Snyk), container security (Trivy, Grype, SBOM), secret scanning (TruffleHog, Gitleaks), security gates, license compliance
-- **[optimization.md](references/optimization.md)** - Caching strategies (dependencies, Docker layers, build artifacts), parallelization techniques, test splitting, build optimization, resource management
-- **[troubleshooting.md](references/troubleshooting.md)** - Common issues (workflow not triggering, flaky tests, timeouts, dependency errors), Docker problems, authentication issues, platform-specific debugging
+- `references/best_practices.md` — Pipeline design, testing, deployment patterns, artifact handling
+- `references/security.md` — Secrets management, OIDC, supply chain security, secure pipeline patterns
+- `references/devsecops.md` — SAST/DAST/SCA tooling (CodeQL, Semgrep, Trivy, Snyk), security gates
+- `references/optimization.md` — Caching strategies, parallelization, test splitting, build optimization
+- `references/troubleshooting.md` — Common issues, Docker problems, authentication, platform debugging
 
 ## Templates
 
-Starter templates for common use cases:
+Starter templates in `assets/templates/` for both GitHub Actions and GitLab CI:
 
-### GitHub Actions
-- **`assets/templates/github-actions/node-ci.yml`** - Complete Node.js CI/CD with security scanning, caching, matrix testing, and multi-environment deployment
-- **`assets/templates/github-actions/python-ci.yml`** - Python pipeline with security scanning, pytest, coverage, PyPI deployment
-- **`assets/templates/github-actions/go-ci.yml`** - Go pipeline with security scanning, multi-platform builds, benchmarks, integration tests
-- **`assets/templates/github-actions/docker-build.yml`** - Docker build with multi-platform support, security scanning, SBOM generation, and signing
-- **`assets/templates/github-actions/security-scan.yml`** - Comprehensive DevSecOps pipeline with SAST, DAST, SCA, container scanning, and security gates
+| Language/Type | GitHub Actions | GitLab CI |
+|---------------|---------------|-----------|
+| Node.js | `github-actions/node-ci.yml` | `gitlab-ci/node-ci.yml` |
+| Python | `github-actions/python-ci.yml` | `gitlab-ci/python-ci.yml` |
+| Go | `github-actions/go-ci.yml` | `gitlab-ci/go-ci.yml` |
+| Docker | `github-actions/docker-build.yml` | `gitlab-ci/docker-build.yml` |
+| Security | `github-actions/security-scan.yml` | `gitlab-ci/security-scan.yml` |
 
-### GitLab CI
-- **`assets/templates/gitlab-ci/node-ci.yml`** - GitLab CI pipeline with security scanning, parallel execution, services, and deployment stages
-- **`assets/templates/gitlab-ci/python-ci.yml`** - Python pipeline with security scanning, parallel testing, Docker builds, PyPI and Cloud Run deployment
-- **`assets/templates/gitlab-ci/go-ci.yml`** - Go pipeline with security scanning, multi-platform builds, benchmarks, Kubernetes deployment
-- **`assets/templates/gitlab-ci/docker-build.yml`** - Docker build with DinD, multi-arch, Container Registry, security scanning
-- **`assets/templates/gitlab-ci/security-scan.yml`** - Comprehensive DevSecOps pipeline with SAST, DAST, SCA, container scanning, GitLab security templates, and security gates
+All templates include security scanning, caching, and multi-environment deployment stages.
 
 ## Common Patterns
 
@@ -536,32 +483,6 @@ deploy:
     - if: '$CI_COMMIT_BRANCH == "main"'
       when: manual
 ```
-
-## Best Practices Summary
-
-**Performance:**
-- Enable dependency caching
-- Parallelize independent jobs
-- Add path filters to reduce unnecessary runs
-- Use matrix builds for cross-platform testing
-
-**Security:**
-- Use OIDC for cloud authentication
-- Pin actions to commit SHAs
-- Enable secret scanning and vulnerability checks
-- Apply principle of least privilege
-
-**Reliability:**
-- Add timeouts to prevent hung jobs
-- Implement retry logic for flaky operations
-- Use health checks after deployments
-- Enable concurrency cancellation
-
-**Maintainability:**
-- Use reusable workflows/templates
-- Document non-obvious decisions
-- Keep workflows DRY with extends/includes
-- Regular dependency updates
 
 ## Getting Started
 
