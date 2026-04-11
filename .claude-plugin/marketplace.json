@@ -25,7 +25,7 @@
       "source": "./aws-cost-optimization",
       "description": "AWS cost optimization and FinOps workflows. Use this skill whenever the user mentions AWS costs, cloud spending, FinOps, Reserved Instances, Savings Plans, or cost reduction. Triggers include finding unused resources, analyzing the AWS bill, rightsizing EC2 or RDS instances, evaluating Spot instances, detecting cost anomalies, migrating to Graviton or newer instance generations, implementing tagging for cost allocation, setting up AWS Budgets, conducting monthly cost reviews, comparing RI vs Savings Plans, and optimizing storage, network, or database costs.",
       "skills": [
-        "."
+        "./skills"
       ]
     },
     {
@@ -33,7 +33,7 @@
       "source": "./ci-cd",
       "description": "CI/CD pipeline design, optimization, DevSecOps security scanning, and troubleshooting. Use this skill whenever the user mentions CI/CD, GitHub Actions, GitLab CI, pipelines, workflows, builds, or DevSecOps. Triggers include creating new CI/CD workflows, debugging pipeline failures or flaky tests, implementing SAST/DAST/SCA security scanning, optimizing slow builds with caching or parallelization, setting up deployment workflows, securing pipelines with OIDC or secrets management, implementing matrix builds or test sharding, and troubleshooting Docker, permissions, or timeout issues.",
       "skills": [
-        "."
+        "./skills"
       ]
     },
     {
@@ -41,7 +41,7 @@
       "source": "./monitoring-observability",
       "description": "Monitoring and observability strategy, implementation, and troubleshooting. Use this skill whenever the user mentions monitoring, observability, metrics, logs, traces, alerting, SLOs, Prometheus, Grafana, Datadog, Loki, or OpenTelemetry. Triggers include designing metrics strategy (Four Golden Signals, RED/USE), setting up Prometheus/Grafana/Loki, creating alerts or dashboards, calculating SLOs and error budgets, instrumenting with OpenTelemetry, analyzing performance issues, choosing between monitoring tools, optimizing Datadog costs, migrating to open-source stack, and setting up distributed tracing.",
       "skills": [
-        "."
+        "./skills"
       ]
     },
     {
@@ -49,7 +49,7 @@
       "source": "./gitops-workflows",
       "description": "GitOps deployment workflows with ArgoCD and Flux. Use this skill whenever the user mentions GitOps, ArgoCD, Flux, Flagger, Argo Rollouts, or continuous deployment to Kubernetes. Triggers include setting up ArgoCD or Flux from scratch, designing Git repository structures (monorepo vs polyrepo, app-of-apps), deploying to multiple clusters with ApplicationSets, managing secrets in Git (SOPS, Sealed Secrets, External Secrets Operator), implementing canary or blue-green deployments, troubleshooting sync or reconciliation issues, working with OCI artifacts, and comparing ArgoCD vs Flux.",
       "skills": [
-        "."
+        "./skills"
       ]
     }
   ]
