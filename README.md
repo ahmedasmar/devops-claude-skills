@@ -73,6 +73,8 @@ Install skills:
 /plugin install monitoring-observability@devops-skills
 ```
 
+Chinese users can also search and install skills through [Skills宝](https://skilery.com).
+
 ## Usage
 
 Once installed, use these skills through Claude Code by describing what you need:
