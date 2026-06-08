@@ -1,0 +1,8 @@
+{
+  "name": "jira-flesh-out",
+  "description": "Rewrites unresolved Jira tickets with complete, copy-pasteable acceptance criteria and implementation guidance targeting a Zero-Context Practitioner. Generates prerequisites, Given/When/Then ACs, verification steps, error scenarios, rollback instructions, story point estimates, and priority classification. Dispatches all tickets as parallel agents after a single bulk confirmation. Trigger phrases: 'flesh out jira tickets', 'detail jira tickets', 'write acceptance criteria', 'fill in jira tickets', '/jira-flesh-out'.",
+  "version": "1.10.0",
+  "author": {
+    "name": "Kevin Kunkel"
+  }
+}
