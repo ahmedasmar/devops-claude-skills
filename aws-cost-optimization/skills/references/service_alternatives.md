@@ -245,7 +245,7 @@ Dev/test, intermittent use → Aurora Serverless v2
 ### DynamoDB Pricing Models
 
 **On-Demand (Unpredictable Traffic)**
-- **Cost**: $1.25 per million writes, $0.25 per million reads
+- **Cost**: $0.625 per million writes, $0.125 per million reads
 - **When to use**: Variable traffic, new applications, spiky workloads
 - **Pros**: No capacity planning, scales automatically
 - **Example**: New API with unknown traffic pattern
@@ -263,7 +263,7 @@ Dev/test, intermittent use → Aurora Serverless v2
 
 **Break-Even Calculation**
 ```
-On-Demand: $1.25 per million writes
+On-Demand: $0.625 per million writes
 Provisioned: ~$0.47 per million writes (at capacity)
 Break-even: ~65% consistent utilization
 
